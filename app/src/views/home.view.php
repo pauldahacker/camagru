@@ -8,9 +8,13 @@
     <body>
         <h1>Welcome to Camagru!</h1>
         <form action="index.php" method="post">
+            <label for="mail">Email:</label>
+            <input type="email" id="mail" name="mail">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username">
-            <button type="submit">Say hello</button>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <button type="submit">Add to database</button>
         </form>
     </body>
 

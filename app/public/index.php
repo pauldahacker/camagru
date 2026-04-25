@@ -1,22 +1,31 @@
 <?php
 require __DIR__ . '/../src/greet.php';
 
+try {
+        $pdo = new PDO('pgsql:host=db;dbname=camagru', 'user', 'pass');
+    }
+    catch (PDOException $e) {
+        echo "Database connection failed: " . $e->getMessage();
+        exit;
+    }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST["username"];
-    echo greet($name);
+    $email = $_POST['mail'] ?? '';
+    $name = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+    
+    $addstatement = $pdo->prepare("INSERT INTO users (mail, username, password) VALUES (?, ?, ?)");
+    $addstatement->execute([$email, $name, $password]);
+    $statement = $pdo->prepare("SELECT * FROM users");
+    $statement->execute();
+    var_dump($statement->fetchAll());
 }
 
-try {
-    $pdo = new PDO('pgsql:host=db;dbname=camagru', 'user', 'pass');
-}
-catch (PDOException $e) {
-    echo "Database connection failed: " . $e->getMessage();
-    exit;
-}
+
 
 $statement = $pdo->prepare("SELECT * FROM users");
 $statement->execute();
 var_dump($statement->fetchAll());
 
-require '../src/views/index.view.php';
+require '../src/views/home.view.php';
 ?>
