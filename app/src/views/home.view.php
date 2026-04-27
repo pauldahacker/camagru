@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1>Welcome to Camagru!</h1>
-        <form action="index.php" method="post">
+        <form action="/db" method="post">
             <label for="mail">Email:</label>
             <input type="email" id="mail" name="mail">
             <label for="username">Username:</label>
