@@ -7,8 +7,8 @@ class QueryBuilder {
         $this->pdo = $pdo;
     }
 
-    public function selectAll($table) {
-        $statement = $this->pdo->prepare("SELECT * FROM {$table}");
+    public function selectAllUsers() {
+        $statement = $this->pdo->prepare("SELECT * FROM users");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
@@ -23,8 +23,19 @@ class QueryBuilder {
             id SERIAL PRIMARY KEY,
             mail VARCHAR(255) NOT NULL UNIQUE,
             username VARCHAR(255) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL
-        )");
+            password VARCHAR(255) NOT NULL)");
         $statement->execute();
+    }
+
+    public function emailExists($email) {
+        $statement = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE mail = ?");
+        $statement->execute([$email]);
+        return $statement->fetchColumn() > 0;
+    }
+
+    public function usernameExists($username) {
+        $statement = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+        $statement->execute([$username]);
+        return $statement->fetchColumn() > 0;
     }
 }

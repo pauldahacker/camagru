@@ -16,11 +16,15 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     container_name: camagru_php
+    env_file:
+      - .env
     volumes:
       - ./app:/var/www/html # Map app directory to container for Hot Reloading
   db:
     image: postgres:15-alpine
     container_name: camagru_db
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}

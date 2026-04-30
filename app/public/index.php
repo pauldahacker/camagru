@@ -9,6 +9,6 @@ $router = Router::load('routes.php');
 
 require $router->direct($uri);
 
-// var_dump($query->selectAll('users'));
+// var_dump($query->selectAllUsers());
 
 ?>
